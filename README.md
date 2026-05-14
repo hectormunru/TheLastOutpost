@@ -29,7 +29,7 @@ Sigue estos pasos para compilar y probar el juego en tu dispositivo local o emul
 
 1. **Clona el repositorio:**
    ```bash
-   git clone https://github.com/TU_USUARIO/TheLastOutpost.git
+   git clone https://github.com/hectormunru/TheLastOutpost.git
    cd TheLastOutpost-main
    ```
 
