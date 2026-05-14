@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable name="viewModel" type="com.example.thelastoutpost.viewmodel.GameViewModel" />
+    </data>
+
+    <!-- Raíz: cubre toda la pantalla -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- SKY (Static base) -->
+        <ImageView
+            android:id="@+id/ivSky"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/forest_sky" />
+
+        <!-- MOON (Static) -->
+        <ImageView
+            android:id="@+id/ivMoon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/forest_moon" />
+
+        <!-- MOUNTAINS (Parallax 0.05) -->
+        <View
+            android:id="@+id/vParallaxMountain"
+            android:layout_width="10000dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_forest_mountain" />
+
+        <!-- BACK FOREST (Parallax 0.15) -->
+        <View
+            android:id="@+id/vParallaxBack"
+            android:layout_width="10000dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_forest_back" />
+
+        <!-- MID FOREST (Parallax 0.3) -->
+        <View
+            android:id="@+id/vParallaxMid"
+            android:layout_width="10000dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_forest_mid" />
+
+        <!-- SHORT FOREST (Parallax 0.6) -->
+        <View
+            android:id="@+id/vParallaxShort"
+            android:layout_width="10000dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_forest_short" />
+
+        <!-- ════════════════════════════════════
+             CAPA 3 – MUNDO (5000dp ancho = ratio real 4500x720px de la imagen)
+             El fondo se renderiza SIN zoom artificial: la imagen ocupa toda la altura
+             de pantalla y el mundo se desplaza horizontalmente.
+             ════════════════════════════════════ -->
+        <FrameLayout
+            android:id="@+id/flWorldContainer"
+            android:layout_width="5000dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom">
+
+            <!-- Capa con el césped, decoraciones estáticas aleatorias y fondo del mundo continuo -->
+            <com.example.thelastoutpost.ui.EnvironmentDecorationsView
+                android:id="@+id/vEnvironment"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_gravity="bottom" />
+
+            <!-- Contenedor de entidades: se superpone al fondo -->
+            <FrameLayout
+                android:id="@+id/flEntities"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </FrameLayout>
+
+            <!-- Jugador: posicionado sobre la línea negra del césped -->
+            <!-- La línea negra del suelo está al ~85% de la altura de la imagen -->
+            <!-- Con match_parent ~800dp, el suelo visible está a ~100dp del borde inferior -->
+            <ImageView
+                android:id="@+id/ivPlayer"
+                android:layout_width="200dp"
+                android:layout_height="100dp"
+                android:layout_gravity="bottom|start"
+                android:layout_marginBottom="90dp"
+                android:scaleType="fitCenter" />
+
+        </FrameLayout>
+
+        <!-- ════════════════════════════════════
+             CAPA 4 – FILTRO DE NOCHE (overlay dinámico)
+             ════════════════════════════════════ -->
+        <View
+            android:id="@+id/vNightOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#000033"
+            android:alpha="0.0" />
+
+        <!-- ════════════════════════════════════
+             UI FIJA – HUD SUPERIOR
+             ════════════════════════════════════ -->
+        <LinearLayout
+            android:id="@+id/llHUD"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp"
+            android:background="@drawable/bg_frosted_panel"
+            android:layout_margin="10dp"
+            android:elevation="12dp"
+            android:layout_gravity="top|start">
+
+            <TextView
+                android:id="@+id/tvGold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="@color/ice_navy"
+                android:layout_marginBottom="6dp"
+                android:text='@{@string/game_gold_label(viewModel.gameState.player.gold)}'
+                tools:text="💰 Oro: 100" />
+
+            <!-- Player HP Bar (Compact) -->
+            <FrameLayout
+                android:layout_width="120dp"
+                android:layout_height="6dp"
+                android:background="#44000000"
+                android:padding="1dp">
+                
+                <View
+                    android:id="@+id/vPlayerHp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#FF4444"
+                    android:scaleX='@{ (float)viewModel.gameState.player.currentHp / (float)viewModel.gameState.player.maxHp }'
+                    android:transformPivotX="0dp" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <!-- ════════════════════════════════════
+             UI FIJA – BOTONES RÁPIDOS MEDIEVALES
+             ════════════════════════════════════ -->
+        <LinearLayout
+            android:id="@+id/llQuickActions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="top|end"
+            android:layout_marginTop="85dp"
+            android:layout_marginEnd="10dp">
+
+            <ImageButton
+                android:id="@+id/btnAchievementsInGame"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:src="@drawable/fb15"
+                android:scaleType="centerInside"
+                android:padding="12dp"
+                android:background="@drawable/btn_glass_hud"
+                android:layout_marginBottom="10dp"
+                android:elevation="8dp"
+                tools:ignore="ContentDescription" />
+
+            <ImageButton
+                android:id="@+id/btnStatsInGame"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:src="@drawable/fb7"
+                android:scaleType="centerInside"
+                android:padding="12dp"
+                android:background="@drawable/btn_glass_hud"
+                android:layout_marginBottom="10dp"
+                android:elevation="8dp"
+                tools:ignore="ContentDescription" />
+
+            <ImageButton
+                android:id="@+id/btnSettingsInGame"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:src="@drawable/fb2"
+                android:scaleType="centerInside"
+                android:padding="12dp"
+                android:background="@drawable/btn_glass_hud"
+                android:elevation="8dp"
+                android:layout_marginBottom="10dp"
+                tools:ignore="ContentDescription" />
+        </LinearLayout>
+
+        <!-- Controles Superiores Izquierda (Nuevos) -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="top|start"
+            android:layout_marginTop="85dp"
+            android:layout_marginStart="10dp">
+
+            <ImageButton
+                android:id="@+id/btnSkillsInGame"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:src="@drawable/fb12"
+                android:scaleType="centerInside"
+                android:padding="8dp"
+                android:background="@drawable/btn_glass_hud"
+                android:elevation="8dp"
+                android:layout_marginBottom="10dp"
+                tools:ignore="ContentDescription" />
+
+            <ImageButton
+                android:id="@+id/btnSaveAndExit"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:src="@drawable/fb11"
+                android:scaleType="centerInside"
+                android:padding="12dp"
+                android:background="@drawable/btn_glass_hud"
+                android:elevation="8dp"
+                tools:ignore="ContentDescription" />
+        </LinearLayout>
+
+        <!-- ════════════════════════════════════
+             UI FIJA – MINIMAPA (Journey Map)
+             ════════════════════════════════════ -->
+        <FrameLayout
+            android:id="@+id/flMinimap"
+            android:layout_width="150dp"
+            android:layout_height="10dp"
+            android:layout_gravity="top|end"
+            android:layout_marginTop="62dp"
+            android:layout_marginEnd="10dp"
+            android:background="#AA000000"
+            android:padding="2dp">
+
+            <View
+                android:id="@+id/vMinimapPlayer"
+                android:layout_width="8dp"
+                android:layout_height="6dp"
+                android:background="@color/white"
+                android:layout_gravity="center_vertical" />
+        </FrameLayout>
+
+        <!-- ════════════════════════════════════
+             UI FIJA – CONTROLES INFERIORES
+             ════════════════════════════════════ -->
+        <LinearLayout
+            android:id="@+id/llControls"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="bottom"
+            android:padding="12dp"
+            android:background="#CC000000"
+            android:elevation="12dp">
+
+            <Button
+                android:id="@+id/btnLeft"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:text="@string/game_btn_move_left"
+                android:background="@drawable/btn_glass_hud"
+                android:textColor="@color/white"
+                android:layout_marginEnd="6dp"
+                android:textSize="13sp" />
+
+            <Button
+                android:id="@+id/btnRight"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:text="@string/game_btn_move_right"
+                android:background="@drawable/btn_glass_hud"
+                android:textColor="@color/white"
+                android:layout_marginEnd="6dp"
+                android:textSize="13sp" />
+
+            <Button
+                android:id="@+id/btnDash"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:text="@string/game_btn_dash"
+                android:background="@drawable/btn_glass_hud"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_marginEnd="6dp"
+                android:textSize="13sp" />
+
+            <Button
+                android:id="@+id/btnAttack"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:text="@string/game_btn_attack"
+                android:background="@drawable/btn_glass_hud"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+    </FrameLayout>
+</layout>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="8dp">
+
+    <!-- Círculo del nodo -->
+    <FrameLayout
+        android:id="@+id/flNodeCircle"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/bg_skill_node_locked"
+        android:elevation="4dp">
+        
+        <TextView
+            android:id="@+id/tvCost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            tools:text="20" />
+    </FrameLayout>
+
+    <!-- Nombre de la habilidad -->
+    <TextView
+        android:id="@+id/tvSkillName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:textAlignment="center"
+        tools:text="Habilidad I" />
+
+    <!-- Descripción breve -->
+    <TextView
+        android:id="@+id/tvSkillDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#CCCCCC"
+        android:textSize="12sp"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:layout_marginTop="2dp"
+        tools:text="+2 Efecto" />
+        
+    <!-- CTA (Call To Action) click to buy -->
+    <TextView
+        android:id="@+id/tvCta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="TOCAR"
+        android:textSize="10sp"
+        android:textColor="#FFD700"
+        android:textStyle="bold"
+        android:background="@drawable/bg_frosted_panel"
+        android:paddingHorizontal="6dp"
+        android:paddingVertical="2dp" />
+
+</LinearLayout>

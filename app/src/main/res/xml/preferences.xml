@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="Ajustes de Juego">
+        <SwitchPreferenceCompat
+            app:key="sound_enabled"
+            app:title="Efectos de Sonido"
+            app:summary="Activar o desactivar los efectos de sonido"
+            app:defaultValue="true" />
+
+        <SeekBarPreference
+            app:key="music_volume"
+            app:title="Volumen de la Música"
+            app:summary="Ajusta el volumen de la música de fondo"
+            app:defaultValue="50"
+            app:showSeekBarValue="true"
+            android:max="100" />
+            
+        <SeekBarPreference
+            app:key="brightness"
+            app:title="Brillo de la Pantalla"
+            app:summary="Ajusta el brillo durante el juego"
+            app:defaultValue="100"
+            app:showSeekBarValue="true"
+            android:max="100" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

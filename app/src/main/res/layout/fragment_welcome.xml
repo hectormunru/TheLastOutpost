@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_medieval_menu">
+
+        <!-- SnowView eliminado para coherencia medieval -->
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="24dp">
+
+            <!-- Logo / Título -->
+            <TextView
+                android:id="@+id/tvLogo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="THE LAST OUTPOST"
+                android:textSize="42sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_main"
+                android:shadowColor="#80000000"
+                android:shadowDx="4"
+                android:shadowDy="4"
+                android:shadowRadius="8"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="32dp" />
+
+            <!-- Contenedor Partidas (RecyclerView) -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvSaveSlots"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/tvLogo"
+                app:layout_constraintBottom_toTopOf="@id/btnNewGame"
+                android:layout_marginTop="24dp" />
+
+            <!-- Botón Nueva Partida -->
+            <Button
+                android:id="@+id/btnNewGame"
+                android:layout_width="260dp"
+                android:layout_height="64dp"
+                android:text="@string/menu_btn_new_game"
+                android:background="@drawable/btn_arctic_primary"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginBottom="48dp" />
+
+            <!-- Menú Lateral Derecho (Vertical) -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="70dp">
+
+                <ImageButton
+                    android:id="@+id/btnSettings"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:src="@android:drawable/ic_menu_preferences"
+                    app:tint="@color/white"
+                    android:background="@drawable/btn_arctic_primary"
+                    android:layout_marginBottom="12dp"
+                    android:contentDescription="Ajustes" />
+
+                <ImageButton
+                    android:id="@+id/btnCredits"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:src="@android:drawable/ic_menu_info_details"
+                    app:tint="@color/white"
+                    android:background="@drawable/btn_arctic_primary"
+                    android:layout_marginBottom="12dp"
+                    android:contentDescription="Créditos" />
+
+                <ImageButton
+                    android:id="@+id/btnExit"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:src="@android:drawable/ic_menu_close_clear_cancel"
+                    app:tint="@color/white"
+                    android:backgroundTint="#FF4444"
+                    android:background="@drawable/btn_arctic_primary"
+                    android:contentDescription="Salir de la aplicación" />
+            </LinearLayout>
+
+            <!-- Iconos Sociales Inferior Izquierda -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_launcher_foreground"
+                    android:layout_marginEnd="8dp" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
+</layout>

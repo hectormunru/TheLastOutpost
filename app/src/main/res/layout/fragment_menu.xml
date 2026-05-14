@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.thelastoutpost.viewmodel.MenuViewModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_sky_medieval"
+        tools:context="com.example.thelastoutpost.ui.MenuFragment">
+
+        
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="24dp"
+            android:background="@drawable/bg_frosted_panel"
+            android:orientation="vertical"
+            android:padding="32dp">
+
+            <!-- Título del juego -->
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/menu_title"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_main"
+                android:layout_marginBottom="8dp" />
+
+            <!-- Subtítulo -->
+            <TextView
+                android:id="@+id/tvSubtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/menu_subtitle"
+                android:textSize="16sp"
+                android:textColor="@color/text_secondary"
+                android:layout_marginBottom="40dp" />
+
+            <!-- Botón Jugar -->
+            <Button
+                android:id="@+id/btnPlay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/menu_btn_play"
+                android:background="@drawable/btn_arctic_primary"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:padding="16dp"
+                android:layout_marginBottom="12dp" />
+
+            <!-- Botón Logros -->
+            <Button
+                android:id="@+id/btnAchievements"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/menu_btn_achievements"
+                android:background="@drawable/btn_arctic_primary"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:padding="16dp"
+                android:layout_marginBottom="12dp" />
+
+            <!-- Botón Estadísticas -->
+            <Button
+                android:id="@+id/btnStatistics"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/menu_btn_statistics"
+                android:background="@drawable/btn_arctic_primary"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:padding="16dp"
+                android:layout_marginBottom="12dp" />
+
+            <!-- Botón Ajustes -->
+            <Button
+                android:id="@+id/btnSettings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/menu_btn_settings"
+                android:textColor="@color/text_secondary"
+                android:padding="16dp"
+                style="?android:attr/borderlessButtonStyle" />
+
+        </LinearLayout>
+    </FrameLayout>
+</layout>

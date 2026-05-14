@@ -1,0 +1,62 @@
+<resources>
+    <string name="app_name">The Last Outpost</string>
+
+    <!-- Menú principal -->
+    <string name="menu_title">The Last Outpost</string>
+    <string name="menu_subtitle">Sobrevive. Construye. Defiende.</string>
+    <string name="menu_hint_name">Nombre del jugador</string>
+    <string name="menu_btn_play">Jugar</string>
+    <string name="menu_btn_settings">Ajustes</string>
+
+    <!-- Ajustes -->
+    <string name="settings_title">Opciones</string>
+    <string name="settings_sound">Efectos de Sonido</string>
+    <string name="settings_music">Música Ambiente</string>
+    <string name="settings_brightness">Brillo</string>
+    <string name="settings_btn_back">Cerrar</string>
+
+    <!-- Créditos -->
+    <string name="credits_title">Créditos de Desarrollo</string>
+    <string name="credits_text">Desarrollado por Jaime Morata Bermúdez y Héctor Muñoz Rubio, estudiantes de ingeniería informática en la UAM. \n\nAsignatura: Desarrollo de aplicaciones móviles.</string>
+    <string name="credits_btn_back">Volver al Menú</string>
+
+    <!-- Menú Principal (Nuevo) -->
+    <string name="menu_btn_new_game">NUEVA PARTIDA</string>
+    <string name="menu_btn_credits">CRÉDITOS</string>
+    <string name="menu_btn_exit">SALIR</string>
+    <string name="menu_slot_day">Día: %1$d</string>
+    <string name="menu_slot_progress">Progreso: %1$d%%</string>
+
+    <!-- Juego (HUD) -->
+    <string name="game_player_label">%1$s</string>
+    <string name="game_gold_label">Oro: %1$d</string>
+    <!-- Pantalla de Bienvenida -->
+    <string name="welcome_title">¡Bienvenido Comandante!</string>
+    <string name="welcome_desc">Antes de defender el último puesto de avanzada, necesitamos saber quién lidera la resistencia.</string>
+    <string name="welcome_hint_name">Introduce tu nombre de héroe</string>
+    <string name="welcome_btn_continue">Continuar al Cuartel</string>
+
+    <!-- Pantalla de Logros -->
+    <string name="achievements_title">Muro de Logros</string>
+    <string name="achievement_unlocked">DESBLOQUEADO</string>
+    <string name="achievement_locked">BLOQUEADO</string>
+
+    <!-- Pantalla de Estadísticas -->
+    <string name="stats_title">Registro de Guerra</string>
+    <string name="stats_enemies_killed">Enemigos derrotados: %1$d</string>
+    <string name="stats_gold_earned">Oro total recolectado: %1$d</string>
+    <string name="stats_max_wave">Máxima oleada alcanzada: %1$d</string>
+    <string name="stats_btn_back">Volver al Cuartel</string>
+
+    <string name="menu_btn_achievements">Logros</string>
+    <string name="menu_btn_statistics">Estadísticas</string>
+
+    <string name="app_logo_title">THE LAST OUTPOST</string>
+    <string name="game_btn_move_left">← MOVER</string>
+    <string name="game_btn_attack">✕ ATACAR</string>
+    <string name="game_btn_dash">DASH »</string>
+    <string name="game_btn_move_right">MOVER →</string>
+    <string name="name_entry_title">¿CÓMO DEBERÍAMOS LLAMARTE?</string>
+    <string name="name_entry_hint">Tu apodo aquí...</string>
+    <string name="name_entry_btn_confirm">CONFIRMAR</string>
+</resources>

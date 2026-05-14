@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentación de Arquitectura - The Last Outpost</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            line-height: 1.7; 
+            color: #333; 
+            background-color: #f4f7f6; 
+            padding: 20px; 
+        }
+        .container { 
+            max-width: 1100px; 
+            margin: auto; 
+            background: #fff; 
+            padding: 40px; 
+            border-radius: 10px; 
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05); 
+        }
+        h1 { 
+            color: #2c3e50; 
+            border-bottom: 3px solid #3498db; 
+            padding-bottom: 10px; 
+            text-align: center;
+        }
+        h2 { 
+            color: #2980b9; 
+            margin-top: 40px; 
+            border-bottom: 2px solid #ecf0f1; 
+            padding-bottom: 8px; 
+        }
+        h3 { 
+            color: #d35400; 
+            margin-top: 25px;
+        }
+        p { 
+            margin-bottom: 15px; 
+            text-align: justify;
+        }
+        ul { 
+            margin-bottom: 20px; 
+        }
+        li { 
+            margin-bottom: 12px; 
+        }
+        code { 
+            background: #fdf2e9; 
+            border: 1px solid #fad7a1; 
+            padding: 2px 6px; 
+            border-radius: 4px; 
+            font-family: 'Consolas', 'Courier New', monospace; 
+            color: #e67e22; 
+            font-size: 0.95em; 
+            font-weight: bold;
+        }
+        .file-name {
+            color: #16a085;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        .note { 
+            background: #ebf5fb; 
+            border-left: 5px solid #2ecc71; 
+            padding: 15px 20px; 
+            margin-top: 30px; 
+            border-radius: 0 5px 5px 0; 
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Documentación Exhaustiva de Arquitectura</h1>
+    <p>
+        Este documento describe en profundidad la estructura interna del código, los componentes principales y la responsabilidad técnica de cada archivo en el desarrollo de <strong>The Last Outpost</strong>.
+    </p>
+    <p>
+        El proyecto ha sido rigurosamente estructurado siguiendo la arquitectura <strong>MVVM (Model-View-ViewModel)</strong>, el estándar recomendado por Google para el desarrollo moderno en Android. Emplea un modelo de <strong>Single Activity</strong> (una única ventana que alberga múltiples sub-vistas) coordinado por el componente <code>Navigation Graph</code> (Jetpack Navigation) para garantizar transiciones fluidas, gestión de estado unificada y prevención de fugas de memoria.
+    </p>
+
+    <!-- SECTION 1 -->
+    <h2>📁 1. Capa de Interfaz de Usuario (<code>ui/</code>)</h2>
+    <p>
+        Esta capa es estrictamente "tonta" (dumb logic). Su única responsabilidad es reaccionar a los cambios de estado emitidos por los <em>ViewModels</em> y pintar los elementos visuales en pantalla, además de capturar las interacciones físicas del jugador (toques en la pantalla). No calcula lógicas de daño ni gestiona partidas.
+    </p>
+    <ul>
+        <li><span class="file-name">MainActivity.kt</span>: Es la clase raíz del ciclo de vida en Android. Se configura a pantalla completa de forma apaisada (Landscape). Sirve únicamente como el anfitrión (Host) donde el <code>NavHostFragment</code> inyecta e intercambia todas las demás pantallas del juego.</li>
+        
+        <li><span class="file-name">WelcomeFragment.kt</span>: Actúa como el recibidor de la aplicación. Se encarga de instanciar la lectura desde el repositorio de las ranuras (Slots) de guardado. Gestiona los diálogos de creación de nuevas partidas, eliminaciones y el flujo para continuar aventuras anteriores a través de un <code>RecyclerView</code>.</li>
+        
+        <li><span class="file-name">NameEntryFragment.kt</span>: Componente muy ligero utilizado exclusivamente en la primera ejecución o al generar un nuevo perfil. Asegura que el usuario posea una identificación válida antes de habilitar el pase al menú principal, pasándole dicho nombre como un 'argumento seguro' (SafeArg).</li>
+        
+        <li><span class="file-name">MenuFragment.kt</span>: El centro de control o hub logístico (Menú Principal). Despliega los botones que redirigen a los sub-módulos del juego. Utiliza <em>DataBinding</em> para comunicarse rápidamente con el XML y lanzar acciones de navegación hacia el juego en sí, estadísticas, logros o configuración.</li>
+        
+        <li><span class="file-name">GameFragment.kt</span>: El archivo más complejo de la capa de UI. Orquesta la experiencia de juego in-game superponiendo interfaces dinámicas (barras de vida, indicadores de oro, contador de oleadas, botón de pausa) directamente sobre el lienzo renderizado. Está suscrito (mediante el patrón <em>Observer</em>) a docenas de flujos de datos expuestos continuamente (a 60 frames por segundo) por el <code>GameViewModel</code>.</li>
+        
+        <li><span class="file-name">EnvironmentDecorationsView.kt</span>: Una vista altamente customizada capaz de dibujar a muy bajo nivel gráficos (Custom View). Utiliza la clase <code>Canvas</code> de Android para procesar el dibujo vectorial y mapa de bits (Bitmaps). Aquí es donde recae la función pesada de renderizar los fondos en bucle (parallajes), dibujar cada proyectil, dibujar el castillo, y calcular la iluminación mediante superposiciones oscuras según la fase del ciclo Día/Noche.</li>
+        
+        <li><span class="file-name">SpriteAnimator.kt</span>: Es un motor de animación 2D encapsulado. Dado un <em>spritesheet</em> (una única imagen alargada que posee los cientos de fotogramas de un movimiento), esta clase calcula matrices de recorte (frames rectangulares) dependiendo del tiempo (delta time) exacto transcurrido, logrando que los campesinos caminen, los caballeros ataquen y las estructuras se animen con total sincronización de cuadros, independientemente del hardware del dispositivo.</li>
+        
+        <li><span class="file-name">SkillsFragment.kt</span>: Pantalla táctica que aglutina las tres ramas fundamentales de mejoras (Salud del muro, Daño de unidades aliadas y Velocidad de producción). Reacciona deshabilitando colores (filtros monocromos) en tarjetas que no pueden pagarse debido a insuficiencia de oro, comunicando de manera indirecta cada compra intencionada al ViewModel correspondiente.</li>
+        
+        <li><span class="file-name">AchievementsFragment.kt & AchievementsAdapter.kt</span>: Trabajan en sinergia para materializar una interfaz de desplazamiento infinito vertical con los retos y proezas logradas. El Adaptador tiene la misión crítica de reciclar memoria (mediante el patrón <code>ViewHolder</code>) evitando destruir y recrear elementos de la lista en móviles antiguos y limitados, inyectándoles descripciones, fechas de desbloqueo e íconos candados.</li>
+        
+        <li><span class="file-name">StatisticsFragment.kt</span>: Pantalla puramente informativa. Recolecta métricas de desgaste del motor del juego (tiempos totales invertidos, bajas asestadas en todas las partidas sumadas, oleadas masivas sobrevividas) para darle la sensación al jugador de progreso general permanente, independiente a su racha normal perdedora (roguelite persistente).</li>
+        
+        <li><span class="file-name">SettingsFragment.kt & SaveSlotAdapter.kt</span>: Encargados por un lado de gestionar la interacción directa con ajustes binarios (mute de música, habilitar vibración) y por el otro de mostrar los diferentes contenedores pre-serializados de avance del jugador.</li>
+    </ul>
+
+    <!-- SECTION 2 -->
+    <h2>📁 2. Capa de Lógica y Estado (<code>viewmodel/</code>)</h2>
+    <p>
+        El núcleo algorítmico invisible. Estas clases extienden de <code>ViewModel</code> (o <code>AndroidViewModel</code> si requieren persistencia por contextos locales), asegurando que, sin importar si el usuario rota el teléfono, minimiza la aplicación para ver un mensaje emergente, o si hay escasez de memoria global, <strong>el estado matemático del juego se mantenga indestructible en memoria interna</strong> y sobreviva reactivándose en microsegundos y retomando el progreso de manera transparente. Suscitan eventos y encapsulan la lógica condicional intensiva de procesamiento.
+    </p>
+    <ul>
+        <li><span class="file-name">GameViewModel.kt</span>: El titan matemático del proyecto. Contempla e implementa el <em>Main Game Loop</em> (un hilo alternativo de alto rendimiento que corre en paralelo a la UI usando coroutines de Kotlin `viewModelScope.launch { while(true) {...} }`). 
+        Gestiona el multiplicador de dificultad iterativa al cambiar de oleada de invasores, resuelve millones de cálculos abstractos de colisión entre rectángulos invisibles de los proyectiles y entidades enemigas, reduce la vida en arrays compartidos concurrentemente y maneja la recolección algorítmica pasiva del oro proveniente de las estructuras productivas. Controla máquinas de estados rígidas para determinar qué aldeano pasa de 'Caminar' a 'Fallecer'.</li>
+        
+        <li><span class="file-name">MenuViewModel.kt</span>: Un intermediario puente más sencillo. Su propósito es acarrear parámetros rápidos a nivel de aplicación (como el nombre primario del avatar cargado en esa sesión instancial) de tal forma de que los fragmentos no tengan que inquirir al disco directamente constantemente.</li>
+        
+        <li><span class="file-name">SkillsViewModel.kt</span>: Un orquestador económico y verificador de normas lógicas. Valida atómicamente si una transacción intentada (comprar +5 Daño Base) cumple dos requisitos cruciales: si la habilidad predecesora de dicho árbol se halla previamente desbloqueada, y si el monto poseído cruza el límite del costo; restando inmediatamente el balance si todo es exitoso e informando en tiempo real (`MutableLiveData`) a la UI para inhabilitar temporalmente otras tarjetas que pudiesen haber quedado económicamente truncas.</li>
+        
+        <li><span class="file-name">SettingsViewModel.kt</span>: Un manejador asíncrono trivial que garantiza guardar las variables de ajustes técnicos en disco sin atascar y congestionar el único hilo principal de pintura fluida que tiene el jugador activo.</li>
+    </ul>
+
+    <!-- SECTION 3 -->
+    <h2>📁 3. Capa de Acceso a Datos (<code>repository/</code>)</h2>
+    <p>
+        Para un desarrollador, esta capa equivale a "La caja fuerte del servidor de la aplicación local". Define explícitamente métodos para extraer, depositar y truncar la base de datos subyacente. Los ViewModels prohíben llamar al motor nativo (SharedPreferences/SQL) de manera cruda; delegan siempre delegándolo en el Repositorio, logrando inmensa mantenibilidad inter-arquitectónica.
+    </p>
+    <ul>
+        <li><span class="file-name">GameRepository.kt</span>: Este Singleton o Gestor Único asiste mediante delegación de archivos <code>SharedPreferences</code> empleando la imponente librería <code>Gson</code> desarrollada por Google. Transforma objetos hiper-complejos (listas inmensas de habilidades poseídas por un jugador concreto en una partida dada + valores flotantes geolocalizados en el mapa) en gigantes y estructuradas colas de texto <code>JSON</code> inalterables, grabándolas en milisegundos y recuperándolas mediante reflectividad dinámica (<code>TypeToken</code>) al inicio inmediato de la pantalla de bienvenida.</li>
+    </ul>
+
+    <!-- SECTION 4 -->
+    <h2>📁 4. Capa de Modelos (<code>model/</code>)</h2>
+    <p>
+        Colección estricta de <em>Data Classes</em> puramente descriptivas y conceptuales. Absolutamente ninguna clase en este módulo posee funciones destructivas complejas en su interior. Existen únicamente para modelar el esquema topológico en memoria (clases pojos/dtos nativas en el framework Kotlin). Otorgan seguridad de tipado al momento del empaquetamiento (al requerir obligatoriamente de sus parámetros en todo el proyecto).
+    </p>
+    <ul>
+        <li><span class="file-name">GameModels.kt</span>: Archivo multiclase fundamental que contiene docenas de constructores de tipo: <code>Enemy</code> (encapsula si está congelado temporalmente, su salud actual, tipo de sprite, coordenadas X e Y, y radio de daño), <code>Projectile</code> (orientación parabólica y daño por salpicadura), y <code>Building</code> (tipo de torre aliada construida y ritmo de generación pasiva de unidades/monedas).</li>
+        
+        <li><span class="file-name">SaveSlot.kt</span>: Plantilla contenedora global. Retiene intrínsecamente cuál es el sub-identificador aleatorio único al UUID interno del motor para evitar colisiones entre una ranura o partida, frente a otra ranura adicional apodada de igual manera. Incluye además las horas concretas y día in-game que reflejar.</li>
+        
+        <li><span class="file-name">Skill.kt</span>: Abstracción arbórea conceptual que contiene datos rudimentarios e inmutables: Cuánto cuesta esa mejora genérica particular, su jerarquía en el índice y un booleano primitivo resolviendo tajantemente el <code>isUnlocked = false</code> inicial.</li>
+        
+        <li><span class="file-name">Achievement.kt</span>: Abstracción orientada a gamificación que encapsula el sistema de recompensas, retocando atributos de título descriptivo críptico para las recompensas encubiertas e inmaculadas en el panel hasta que son descifradas por casualidad.</li>
+    </ul>
+
+    <!-- SECTION 5 -->
+    <h2>📁 5. Recursos Estructurados (<code>res/</code>)</h2>
+    <p>
+        Constituye el empaquetado final incrustado en el APK estático, desde interfaces hasta empaquetado vectorial SVG re-escalable, mapas semánticos de navegación en árbol XML y texturas masivas comprimidas por gradientes estáticas para aminorar enormemente el impacto termal sobre la batería de los aparatos portables.
+    </p>
+    <ul>
+        <li><span class="file-name">navigation/nav_graph.xml</span>: Un extenso archivo definitorio estandarizado que modeliza gráficamente el mapa algorítmico topológico por completo. Restringe mediante barreras (popping/stacking inclusiones) si presionar 'atrás' en tu dispositivo vuelve al menú perdiendo la partida de improvisto, o si retorna por el marco previo a modo modal. Explicita que <code>GameFragment</code> sólo es navegable legalmente enviándole parámetros de cadena (string arguments).</li>
+        
+        <li><span class="file-name">layout/</span>: Consorcio intensivo de UI por medio de jerarquías modulares flexibles. Haciendo un empleo masivo de <code>ConstraintLayout</code>, las directrices visualizan coordenadas proporcionales matemáticas fijando cada barra porcentual superior hacia los extremos y forzando que los <code>RecyclerView</code> toquen obligatoriamente hasta el pliegue del borde sin salir del corte inferior invisible.</li>
+        
+        <li><span class="file-name">drawable/ & mipmap/</span>: Colección refinada de Bitmaps, capas 9-patch de botones escalables y vectores semánticos en formato XML que Android convierte algorítmicamente en gráficos a resolución nativa acelerados por hardware en milésimas de segundo (botóneristica). Las fotos grandes de decorados (background parallax layers) residen aquí mientras que los <code>mipmap</code> encapsulan y generan el icono visible al momento de abrir el cajón de aplicaciones en el inicio físico del terminal telefónico.</li>
+        
+        <li><span class="file-name">AndroidManifest.xml</span>: La magna carta jurídica ante el sistema operativo global Android. Declara obligatoriamente aspectos privativos cardinales: los ícono-sellos del programa, el tema estético raíz oscurecido predeterminado (The Last Outpost Dark Mode Theme) y restringe de manera unilateral estricta e imperante el sistema de rotación en ejes gravitacionales posibilitando tan solo interaccionar con el aplicativo de madera longitudinal estática en <code>sensorLandscape</code>, prohibiendo la postura "portrait" vertical del sensor biométrico.</li>
+    </ul>
+
+    <div class="note">
+        <strong>💡 Nota sobre Optimización de Limpieza Realizada:</strong> Tras ejecutar métricas de perfileo mediante Gradle Lint Debug y analizadores de impacto residual, se han exterminado exitosamente librerías huérfanas de control meteorológico no adjuntas en compilación visual (<code>SnowView.kt</code> eliminado de raíz del compilador de Dalvik), en conjunto a casi 5 MB íntegros acumulativos consistentes en capturas testeo descartadas no indexadas relativas a los fondos (imágenes 'imagen1.png' temporales pre-builds). El entorno global se ha minimizado e indexado permitiendo tiempos de construcción de entorno rápidos y un APK liviano drástico.
+    </div>
+
+</div>
+
+</body>
+</html>

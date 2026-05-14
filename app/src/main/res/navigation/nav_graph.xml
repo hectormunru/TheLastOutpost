@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/nameEntryFragment">
+
+    <!-- Entrada de Nombre Inicial -->
+    <fragment
+        android:id="@+id/nameEntryFragment"
+        android:name="com.example.thelastoutpost.ui.NameEntryFragment"
+        android:label="Identificación"
+        tools:layout="@layout/fragment_name_entry">
+        <action
+            android:id="@+id/action_nameEntry_to_welcome"
+            app:destination="@id/welcomeFragment"
+            app:popUpTo="@id/nameEntryFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <!-- Pantalla de Bienvenida (Menú Principal con gestión de partidas) -->
+    <fragment
+        android:id="@+id/welcomeFragment"
+        android:name="com.example.thelastoutpost.ui.WelcomeFragment"
+        android:label="Menú Principal"
+        tools:layout="@layout/fragment_welcome">
+        <action
+            android:id="@+id/action_welcome_to_game"
+            app:destination="@id/gameFragment" />
+        <action
+            android:id="@+id/action_welcome_to_settings"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_welcome_to_credits"
+            app:destination="@id/creditsFragment" />
+        <action
+            android:id="@+id/action_welcome_to_skills"
+            app:destination="@id/skillsFragment" />
+    </fragment>
+
+    <!-- Pantalla de Créditos -->
+    <fragment
+        android:id="@+id/creditsFragment"
+        android:name="com.example.thelastoutpost.ui.CreditsFragment"
+        android:label="Créditos"
+        tools:layout="@layout/fragment_credits" />
+
+    <!-- Pantalla de Menú (inicio) -->
+    <fragment
+        android:id="@+id/menuFragment"
+        android:name="com.example.thelastoutpost.ui.MenuFragment"
+        android:label="Menú"
+        tools:layout="@layout/fragment_menu">
+        <argument
+            android:name="playerName"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <!-- Acción: Menú → Juego -->
+        <action
+            android:id="@+id/action_menu_to_game"
+            app:destination="@id/gameFragment" />
+        <!-- Acción: Menú → Ajustes -->
+        <action
+            android:id="@+id/action_menu_to_settings"
+            app:destination="@id/settingsFragment" />
+        <!-- Acción: Menú → Logros -->
+        <action
+            android:id="@+id/action_menu_to_achievements"
+            app:destination="@id/achievementsFragment" />
+        <!-- Acción: Menú → Estadísticas -->
+        <action
+            android:id="@+id/action_menu_to_statistics"
+            app:destination="@id/statisticsFragment" />
+    </fragment>
+
+    <!-- Pantalla del Juego -->
+    <fragment
+        android:id="@+id/gameFragment"
+        android:name="com.example.thelastoutpost.ui.GameFragment"
+        android:label="Juego"
+        tools:layout="@layout/fragment_game">
+        <argument
+            android:name="playerName"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_gameFragment_to_achievementsFragment"
+            app:destination="@id/achievementsFragment" />
+        <action
+            android:id="@+id/action_gameFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_gameFragment_to_statisticsFragment"
+            app:destination="@id/statisticsFragment" />
+        <action
+            android:id="@+id/action_game_to_skills"
+            app:destination="@id/skillsFragment" />
+    </fragment>
+
+    <!-- Pantalla de Ajustes -->
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.thelastoutpost.ui.SettingsFragment"
+        android:label="Ajustes"
+        tools:layout="@layout/fragment_settings" />
+
+    <!-- Pantalla de Logros (Lista) -->
+    <fragment
+        android:id="@+id/achievementsFragment"
+        android:name="com.example.thelastoutpost.ui.AchievementsFragment"
+        android:label="Logros"
+        tools:layout="@layout/fragment_achievements" />
+
+    <!-- Pantalla de Estadísticas -->
+    <fragment
+        android:id="@+id/statisticsFragment"
+        android:name="com.example.thelastoutpost.ui.StatisticsFragment"
+        android:label="Estadísticas"
+        tools:layout="@layout/fragment_statistics" />
+
+    <!-- Pantalla de Mejoras -->
+    <fragment
+        android:id="@+id/skillsFragment"
+        android:name="com.example.thelastoutpost.ui.SkillsFragment"
+        android:label="Mejoras"
+        tools:layout="@layout/fragment_skills" />
+
+</navigation>

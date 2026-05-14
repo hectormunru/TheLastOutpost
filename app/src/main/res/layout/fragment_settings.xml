@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.thelastoutpost.viewmodel.SettingsViewModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_sky_medieval"
+        tools:context="com.example.thelastoutpost.ui.SettingsFragment">
+
+        
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="24dp"
+                android:background="@drawable/bg_frosted_panel"
+                android:orientation="vertical"
+                android:padding="32dp">
+
+                <!-- Título -->
+                <TextView
+                    android:id="@+id/tvSettingsTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/settings_title"
+                    android:textSize="26sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_main"
+                    android:layout_marginBottom="24dp" />
+
+                <!-- Nombre Jugador -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nombre del Jugador:"
+                    android:textSize="17sp"
+                    android:textColor="@color/text_main"
+                    android:layout_marginBottom="8dp" />
+                <EditText
+                    android:id="@+id/etPlayerName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_main"
+                    android:backgroundTint="@color/text_main"
+                    android:inputType="textPersonName"
+                    android:layout_marginBottom="24dp" />
+
+                <!-- Sonido SeekBar -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_sound"
+                    android:textSize="17sp"
+                    android:textColor="@color/text_main"
+                    android:layout_marginBottom="8dp" />
+                <SeekBar
+                    android:id="@+id/sbMusic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:max="100"
+                    android:progress="70"
+                    android:layout_marginBottom="24dp" />
+
+                <!-- Brillo SeekBar -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_brightness"
+                    android:textSize="17sp"
+                    android:textColor="@color/text_main"
+                    android:layout_marginBottom="8dp" />
+                <SeekBar
+                    android:id="@+id/sbBrightness"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:max="100"
+                    android:progress="100"
+                    android:layout_marginBottom="40dp" />
+
+                <!-- Botón volver -->
+                <Button
+                    android:id="@+id/btnBack"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_btn_back"
+                    android:background="@drawable/btn_arctic_primary"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:padding="16dp" />
+
+            </LinearLayout>
+        </ScrollView>
+    </FrameLayout>
+</layout>

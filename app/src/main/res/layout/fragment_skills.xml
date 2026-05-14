@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable name="viewModel" type="com.example.thelastoutpost.viewmodel.SkillsViewModel" />
+    </data>
+    
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.example.thelastoutpost.ui.SkillsFragment">
+
+        <!-- Fondo Ambientado Constelación -->
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/bg_medieval_menu"
+            android:scaleType="centerCrop" />
+            
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#DD111122" />
+
+        <!-- Barra Superior HUD -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:gravity="center_vertical"
+            android:elevation="8dp"
+            android:background="@drawable/bg_frosted_panel">
+            
+            <Button
+                android:id="@+id/btnBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="← CAMPAMENTO"
+                android:textStyle="bold"
+                android:background="@drawable/btn_arctic_primary"
+                android:textColor="@color/white" />
+                
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="CONSTELACIÓN"
+                android:textStyle="bold"
+                android:textSize="22sp"
+                android:textColor="@color/white"
+                android:gravity="center" />
+                
+            <TextView
+                android:id="@+id/tvGold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text='@{@string/game_gold_label(viewModel.currentGold)}'
+                android:textColor="#FFD700"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:padding="8dp"
+                tools:text="Oro 100" />
+        </LinearLayout>
+
+        <!-- Árbol Escroleable -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="80dp"
+            android:fillViewport="true">
+            
+            <!-- Contenedor del Árbol (Padding inferior extra) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:paddingBottom="60dp">
+                
+                <!-- Nodo Cúspide: Golden Skin -->
+                <LinearLayout
+                    android:id="@+id/llGoldenSkin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginTop="30dp">
+                </LinearLayout>
+
+                <!-- Conectores visuales superiores -->
+                <View
+                    android:layout_width="4dp"
+                    android:layout_height="40dp"
+                    android:background="#555555" />
+                <View
+                    android:layout_width="280dp"
+                    android:layout_height="4dp"
+                    android:background="#555555" />
+
+                <!-- Las tres ramas -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_horizontal|top">
+                    
+                    <!-- Rama Velocidad -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center">
+                        
+                        <View android:layout_width="4dp" android:layout_height="30dp" android:background="#555555"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="VELOCIDAD" android:textColor="#AACCFF" android:textStyle="bold" android:textSize="14sp" android:layout_marginBottom="8dp" />
+                        <LinearLayout
+                            android:id="@+id/llSpeedBranch"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center" />
+                    </LinearLayout>
+                        
+                    <!-- Rama Vida -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center">
+                        
+                        <View android:layout_width="4dp" android:layout_height="30dp" android:background="#555555"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="VITALIDAD" android:textColor="#FFAAAA" android:textStyle="bold" android:textSize="14sp" android:layout_marginBottom="8dp" />
+                        <LinearLayout
+                            android:id="@+id/llHealthBranch"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center" />
+                    </LinearLayout>
+                        
+                    <!-- Rama Daño -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center">
+                        
+                        <View android:layout_width="4dp" android:layout_height="30dp" android:background="#555555"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="OFENSIVA" android:textColor="#FFAA55" android:textStyle="bold" android:textSize="14sp" android:layout_marginBottom="8dp" />
+                        <LinearLayout
+                            android:id="@+id/llDamageBranch"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+    </FrameLayout>
+</layout>
